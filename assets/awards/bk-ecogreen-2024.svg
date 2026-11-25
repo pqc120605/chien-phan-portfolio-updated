@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d3a2b"/><stop offset=".55" stop-color="#08251b"/><stop offset="1" stop-color="#04130e"/></linearGradient>
+<radialGradient id="glow" cx=".5" cy=".45" r=".5"><stop offset="0" stop-color="#3ddc84" stop-opacity=".35"/><stop offset="1" stop-color="#3ddc84" stop-opacity="0"/></radialGradient>
+<linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9af5bb"/><stop offset="1" stop-color="#23b56b"/></linearGradient>
+<linearGradient id="silver" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6faf8"/><stop offset="1" stop-color="#a7bbb2"/></linearGradient>
+<pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="rgba(142,240,176,.07)" stroke-width="1"/></pattern>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<rect width="1200" height="900" fill="url(#grid)"/>
+<rect width="1200" height="900" fill="url(#glow)"/>
+<circle cx="600" cy="400" r="210" fill="none" stroke="rgba(142,240,176,.2)" stroke-width="2"/>
+<circle cx="600" cy="400" r="250" fill="none" stroke="rgba(142,240,176,.16)" stroke-width="2" stroke-dasharray="3 13"/>
+<!-- ribbon -->
+<path d="M548 250L520 170h56l24 60 24-60h56l-28 80z" fill="#1f7a52"/>
+<!-- silver medal -->
+<circle cx="600" cy="400" r="150" fill="url(#silver)" stroke="#0d3a2b" stroke-width="8"/>
+<circle cx="600" cy="400" r="122" fill="none" stroke="#7d978b" stroke-width="3"/>
+<!-- sprout inside medal -->
+<path d="M600 470V380" stroke="#1d8f58" stroke-width="10" stroke-linecap="round"/>
+<path d="M600 392C600 340 568 316 520 318C520 366 552 392 600 392Z" fill="url(#leaf)" stroke="#1d8f58" stroke-width="4"/>
+<path d="M600 380C600 322 638 294 692 296C692 350 656 380 600 380Z" fill="url(#leaf)" stroke="#1d8f58" stroke-width="4"/>
+<path d="M560 470h80" stroke="#6f8a7e" stroke-width="8" stroke-linecap="round"/>
+<text x="600" y="690" text-anchor="middle" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="34" font-weight="600" letter-spacing="12" fill="#8ef0b0">Á QUÂN · BK ECOGREEN 2024</text>
+<path d="M60 60h70M60 60v70M1140 60h-70M1140 60v70M60 840h70M60 840v-70M1140 840h-70M1140 840v-70" stroke="rgba(142,240,176,.45)" stroke-width="4" fill="none"/>
+</svg>

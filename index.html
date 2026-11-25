@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phan Quốc Chiến — Kỹ sư Cơ điện tử · Robotics · Thiết bị đeo y sinh</title>
+<meta name="description" content="Phan Quốc Chiến (Chien Quoc Phan), sinh viên Kỹ thuật Cơ điện tử tại HUST, Product Lead tại Volterra, sáng lập ReTrack — hệ thống theo dõi phục hồi chức năng.">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Phan Quốc Chiến — Cơ điện tử · Robotics · Thiết bị đeo y sinh">
+<meta property="og:description" content="Product Lead tại Volterra, sáng lập ReTrack, sinh viên Cơ điện tử HUST.">
+<meta property="og:image" content="https://phanquocchien.vercel.app/assets/og.jpg">
+<meta property="og:url" content="https://phanquocchien.vercel.app/">
+<meta name="theme-color" content="#060f17">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060f17'/%3E%3Cpath d='M6 34h14l6-18 10 32 7-22 4 8h11' fill='none' stroke='%232fd6c6' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#060f17;--bg2:#0a1822;--panel:#0d1f2c;--panel2:#112938;
+ --ink:#e9f1f4;--mute:#8fa3b0;--dim:#5d7282;--line:rgba(233,241,244,.1);--line2:rgba(233,241,244,.18);
+ --teal:#2fd6c6;--teal-d:#17a6b5;--amber:#ffbf5e;
+ --f1:'Bricolage Grotesque','Be Vietnam Pro',system-ui,sans-serif;
+ --f2:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+ --f3:'JetBrains Mono',ui-monospace,Consolas,monospace;
+ --gut:clamp(16px,4vw,48px);--max:1240px;
+}
+*{box-sizing:border-box}
+html:not(.lenis){scroll-behavior:smooth}
+html{scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-stopped{overflow:hidden}
+@media(prefers-reduced-motion:reduce){html:not(.lenis){scroll-behavior:auto}}
+main{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 var(--f2);overflow-x:hidden}
+::selection{background:var(--teal);color:#04141c}
+img{max-width:100%;display:block}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:4px;border-radius:4px}
+html[lang=vi] [data-lang=en],html[lang=en] [data-lang=vi]{display:none!important}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;color:#000;padding:8px 14px;z-index:200}.skip:focus{left:8px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.mono{font-family:var(--f3);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
+.mask{display:block;overflow:hidden;padding-top:.14em;margin-top:-.14em;padding-bottom:.06em;margin-bottom:-.06em}
+.mask>*{display:block}
+
+/* ---------- preloader ---------- */
+.preloader{display:none}
+.js .preloader{position:fixed;inset:0;z-index:150;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.pre-count{font:800 clamp(64px,14vw,160px)/1 var(--f1);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.pre-count small{font-size:.3em;color:var(--teal);margin-left:.1em;vertical-align:top}
+.pre-line{width:min(420px,70vw);height:40px;color:var(--teal)}
+.pre-line path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pre-name{color:var(--mute)}
+
+/* ---------- chrome ---------- */
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--teal);transform-origin:0 50%;transform:scaleX(0);z-index:60}
+header.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:transform .45s cubic-bezier(.2,.7,.2,1),background .3s}
+header.nav.hide{transform:translateY(-100%)}
+header.nav.solid{background:rgba(6,15,23,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:66px;max-width:none}
+.brand{display:flex;align-items:center;gap:10px;font:700 17px var(--f1);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.brand i{width:30px;height:30px;border-radius:8px;background:var(--teal);display:grid;place-items:center}
+.brand i svg{width:20px;height:20px}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.nav ul a{display:block;color:var(--mute);text-decoration:none;font-size:14.5px;padding:7px 12px;border-radius:999px;transition:color .25s,background .25s}
+.nav ul a:hover{color:var(--ink)}
+.nav ul a.active{color:#04141c;background:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;border:1px solid var(--line2);border-radius:999px;padding:3px}
+.lang button{font:500 13px var(--f3);border:0;background:none;color:var(--mute);padding:5px 11px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.menu-toggle{display:none;border:1px solid var(--line2);border-radius:999px;background:none;color:var(--ink);padding:7px 14px;font:500 14px var(--f2);cursor:pointer}
+@media(max-width:900px){
+ .menu-toggle{display:inline-flex}
+ .nav nav{position:fixed;inset:66px 0 auto 0;background:rgba(6,15,23,.97);border-bottom:1px solid var(--line);padding:10px var(--gut) 20px;display:none}
+ .nav nav.open{display:block}
+ .nav ul{flex-direction:column}
+ .nav ul a{font-size:18px;padding:12px 0;border-radius:0;border-bottom:1px solid var(--line)}
+ .nav ul a.active{background:none;color:var(--teal)}
+}
+
+/* ---------- cursor ---------- */
+.cursor,.cursor-ring{display:none}
+@media(hover:hover) and (pointer:fine){
+ .has-cursor .cursor,.has-cursor .cursor-ring{display:block;position:fixed;left:0;top:0;pointer-events:none;z-index:120;border-radius:50%}
+ .has-cursor .cursor{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--teal)}
+ .has-cursor .cursor-ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid rgba(47,214,198,.55);transition:width .3s,height .3s,margin .3s,background .3s,border-color .3s}
+ .has-cursor .cursor-ring.hover{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(47,214,198,.1);border-color:var(--teal)}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;padding:120px 0 0;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%);opacity:.6}
+.glow{position:absolute;z-index:-1;width:640px;height:640px;left:55%;top:20%;margin:-320px 0 0 -320px;border-radius:50%;background:radial-gradient(circle,rgba(47,214,198,.22),transparent 65%);filter:blur(10px);pointer-events:none}
+.hero .wrap{width:100%;display:grid;grid-template-columns:1.35fr .65fr;gap:clamp(28px,5vw,72px);align-items:end;flex:1}
+.hero-kicker{display:flex;align-items:center;gap:12px;color:var(--teal);margin:0 0 22px}
+.hero-kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(47,214,198,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 12px rgba(47,214,198,0)}100%{box-shadow:0 0 0 0 rgba(47,214,198,0)}}
+.hero h1{font:800 clamp(56px,10.5vw,158px)/.92 var(--f1);letter-spacing:-.045em;margin:0 0 28px}
+.hero h1 .ln{display:block;overflow:hidden;padding:.16em 0 .04em;margin:-.16em 0 -.04em}
+.hero h1 .ln:last-child{color:var(--teal)}
+.hero h1 .ch{display:inline-block;will-change:transform}
+.hero-sub{display:grid;grid-template-columns:auto 1fr;gap:18px 28px;align-items:start;max-width:720px}
+.role{font:600 clamp(17px,1.6vw,20px)/1.4 var(--f1);margin:0;padding-top:2px;color:var(--ink)}
+.lead{color:var(--mute);margin:0}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font:600 15px var(--f2);text-decoration:none;border:1px solid var(--teal);background:var(--teal);color:#04141c;overflow:hidden;cursor:pointer}
+.btn svg{width:16px;height:16px;transition:transform .35s}
+.btn:hover svg{transform:translateX(4px) rotate(-45deg)}
+.btn.alt{background:none;color:var(--ink);border-color:var(--line2)}
+.btn.alt:hover{border-color:var(--ink)}
+.photo{position:relative;margin:0;justify-self:end;width:100%;max-width:380px}
+.photo-frame{position:relative;overflow:hidden;border-radius:18px;aspect-ratio:4/5;background:var(--panel)}
+.photo img{width:100%;height:118%;object-fit:cover;object-position:50% 18%;will-change:transform}
+.photo-corners{position:absolute;inset:-10px;pointer-events:none}
+.photo-corners::before,.photo-corners::after{content:"";position:absolute;width:26px;height:26px;border:2px solid var(--teal)}
+.photo-corners::before{left:0;top:0;border-right:0;border-bottom:0}
+.photo-corners::after{right:0;bottom:0;border-left:0;border-top:0}
+.photo-cap{display:flex;justify-content:space-between;margin-top:14px;color:var(--dim)}
+.badge{position:absolute;left:-44px;bottom:70px;display:flex;align-items:center;gap:12px;padding:12px 16px 12px 12px;border-radius:14px;background:rgba(13,31,44,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line2);max-width:260px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.badge i{flex:none;width:40px;height:40px;border-radius:10px;background:var(--amber);display:grid;place-items:center}
+.badge i svg{width:22px;height:22px}
+.badge b{display:block;font:700 14.5px/1.25 var(--f1)}
+.badge span{display:block;font-size:12.5px;color:var(--mute);line-height:1.35}
+.trace{display:block;width:100%;height:70px;margin-top:40px;color:var(--teal)}
+.trace path{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.trace .base{stroke-width:1.5;opacity:.45}
+.trace .pulse{stroke-width:3;stroke-dasharray:.06 .94;filter:drop-shadow(0 0 6px var(--teal))}
+.scroll-hint{position:absolute;right:var(--gut);bottom:96px;writing-mode:vertical-rl;color:var(--dim);display:flex;align-items:center;gap:12px}
+.scroll-hint::after{content:"";width:1px;height:56px;background:linear-gradient(var(--teal),transparent);animation:drip 2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:900px){
+ .hero{padding-top:96px}
+ .hero .wrap{grid-template-columns:1fr;align-items:start}
+ .photo{justify-self:start;max-width:300px;order:-1}
+ .badge{left:auto;right:-12px;bottom:40px;max-width:220px}
+ .hero-sub{grid-template-columns:1fr}
+ .scroll-hint{display:none}
+}
+
+/* ---------- marquee ---------- */
+.marquee{border-block:1px solid var(--line);padding:22px 0;overflow:hidden;background:var(--bg2)}
+.mq-track{display:flex;width:max-content;will-change:transform}
+.mq-track span{font:700 clamp(28px,4.4vw,56px)/1 var(--f1);letter-spacing:-.02em;white-space:nowrap;padding-right:.6em;display:flex;align-items:center;gap:.6em}
+.mq-track span:nth-child(even){color:transparent;-webkit-text-stroke:1px var(--mute)}
+.mq-track span::after{content:"";width:.34em;height:.34em;background:var(--teal);border-radius:50%;display:inline-block}
+
+/* ---------- sections ---------- */
+section{position:relative;padding:clamp(90px,12vw,160px) 0}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;align-items:end;margin-bottom:clamp(40px,6vw,72px)}
+.sec-num{color:var(--teal);padding-bottom:.9em}
+.sec-head h2{font:800 clamp(40px,7vw,96px)/.95 var(--f1);letter-spacing:-.035em;margin:0}
+.sec-head .rule{grid-column:1/-1;height:1px;background:var(--line2);transform-origin:0 50%}
+h3{font:700 clamp(20px,2vw,24px)/1.25 var(--f1);margin:0;letter-spacing:-.01em}
+
+/* about */
+.statement{font:600 clamp(26px,3.6vw,50px)/1.18 var(--f1);letter-spacing:-.02em;margin:0 0 clamp(48px,7vw,90px);max-width:24ch}
+.statement .w{display:inline-block}
+.statement .k{color:var(--teal)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,34px);position:relative;overflow:hidden}
+.card .mono{color:var(--teal);display:block;margin-bottom:16px}
+.card p{color:var(--mute);margin:10px 0 0}
+.edu-school{font:700 clamp(24px,2.6vw,32px)/1.15 var(--f1);letter-spacing:-.02em;margin:0}
+.edu-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--line2);font-size:13.5px;color:var(--ink)}
+.pill.t{border-color:rgba(47,214,198,.4);color:var(--teal)}
+.about-note{color:var(--mute);margin-top:22px!important}
+.skills{display:grid;gap:18px;margin:0}
+.skills div{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.skills div:last-child{border:0;padding:0}
+.skills dt{font:600 15px var(--f2);color:var(--mute)}
+.skills dd{margin:0;display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:5px 12px;border-radius:8px;background:var(--panel2);font:500 13.5px var(--f3);color:var(--ink)}
+.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.stat{padding:clamp(22px,3vw,36px);border-right:1px solid var(--line)}
+.stat:last-child{border:0}
+.stat .num{font:800 clamp(48px,6vw,84px)/1 var(--f1);letter-spacing:-.04em;display:block;font-variant-numeric:tabular-nums}
+.stat .num sup{font-size:.4em;color:var(--teal);vertical-align:top;margin-left:2px}
+.stat p{margin:10px 0 0;color:var(--mute);font-size:15px;line-height:1.45}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}.skills div{grid-template-columns:1fr;gap:8px}}
+
+/* experience */
+.exp>*{min-width:0}
+.exp{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,90px);align-items:start}
+.exp-side{position:sticky;top:110px}
+.exp-side .sec-head h2{font-size:clamp(40px,5.2vw,76px)}
+.exp-side p{color:var(--mute);max-width:36ch;margin:0 0 28px}
+.exp-count{font:800 clamp(80px,10vw,140px)/.9 var(--f1);letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--line2);display:flex;align-items:flex-end;gap:6px}
+.exp-count b{color:var(--teal);-webkit-text-stroke:0;display:inline-block;min-width:1.1ch}
+.exp-count small{font:500 14px var(--f3);color:var(--dim);margin-left:8px;-webkit-text-stroke:0;padding-bottom:12px}
+.tl{padding:0 0 0 38px;position:relative}.tl-list{list-style:none;margin:0;padding:0}
+.tl::before,.tl-fill{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line2)}
+.tl-fill{background:var(--teal);transform-origin:top;transform:scaleY(0);box-shadow:0 0 12px var(--teal)}
+.tl-item{position:relative;padding:0 0 clamp(40px,5vw,64px)}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-38px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--line2);transition:border-color .4s,background .4s,box-shadow .4s}
+.tl-item.on .tl-dot{border-color:var(--teal);background:var(--teal);box-shadow:0 0 0 6px rgba(47,214,198,.15)}
+.tl-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,2.6vw,30px);transition:border-color .4s}
+.tl-item.on .tl-card{border-color:rgba(47,214,198,.35)}
+.yr{color:var(--teal);display:block;margin-bottom:10px}
+.org{color:var(--ink);opacity:.8;margin:4px 0 0;font-size:16px}
+ul.pts{margin:16px 0 0;padding:0;list-style:none;color:var(--mute)}
+ul.pts li{position:relative;padding-left:22px;margin:7px 0;line-height:1.55}
+ul.pts li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:1px;background:var(--teal)}
+@media(max-width:900px){.exp{grid-template-columns:1fr}.exp-side{position:static}.exp-count{display:none}}
+
+/* research */
+.research{background:var(--bg2);border-block:1px solid var(--line)}
+.res-card{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,70px);align-items:center}
+.res-card h3{font-size:clamp(24px,2.8vw,36px);line-height:1.18;letter-spacing:-.02em}
+.res-tag{display:inline-flex;gap:8px;align-items:center;color:var(--amber);border:1px solid rgba(255,191,94,.35);border-radius:999px;padding:6px 14px;margin-bottom:22px}
+.signals{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px 22px}
+.sig{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.sig:last-child{border:0}
+.sig span{color:var(--mute)}
+.sig svg{width:100%;height:56px;overflow:visible}
+.sig path{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:900px){.res-card{grid-template-columns:1fr}}
+
+/* projects */
+.projects{padding-bottom:clamp(90px,12vw,160px)}
+.h-track{display:grid;gap:22px}
+.h-intro p{color:var(--mute);max-width:40ch;margin:0}
+.h-hint{display:none}
+.proj{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,3.4vw,44px);overflow:hidden}
+.proj-no{font:800 clamp(64px,8vw,120px)/.8 var(--f1);letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--line2)}
+.proj-body{display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.proj h3{font-size:clamp(28px,3.4vw,46px);line-height:1.05;letter-spacing:-.03em;margin-bottom:14px}
+.proj p{color:var(--mute);margin:0;max-width:34ch}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.proj-vis{position:relative;border-radius:16px;background:radial-gradient(circle at 50% 40%,rgba(47,214,198,.16),transparent 65%),var(--bg2);border:1px solid var(--line);display:grid;place-items:center;min-height:280px;overflow:hidden}
+.proj-vis svg{width:82%;height:auto;color:var(--teal);overflow:visible}
+.proj-vis svg .s{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.proj-vis svg .f{fill:currentColor}
+.proj-vis svg .m{fill:none;stroke:var(--mute);stroke-width:1.5;stroke-linecap:round;opacity:.6}
+.h-mode .projects{padding:0}
+.h-mode .h-pin{height:100vh;display:flex;align-items:center;overflow:hidden}
+.h-mode .h-track{max-width:none;margin:0;width:max-content;display:flex;gap:28px;padding:0 var(--gut);align-items:stretch;will-change:transform}
+.h-mode .h-intro{flex:none;width:min(440px,34vw);display:flex;flex-direction:column;justify-content:center}
+.h-mode .h-intro .sec-head{grid-template-columns:1fr;margin-bottom:28px}
+.h-mode .h-intro .sec-num{padding:0}
+.h-mode .h-hint{display:flex;align-items:center;gap:12px;color:var(--dim);margin-top:34px}
+.h-mode .h-hint i{width:60px;height:1px;background:var(--dim);position:relative;overflow:hidden}
+.h-mode .h-hint i::after{content:"";position:absolute;inset:0;background:var(--teal);animation:slide 1.8s infinite}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.h-mode .proj{flex:none;width:min(860px,68vw);height:min(560px,72vh)}
+.h-mode .h-end{flex:none;width:1px}
+@media(max-width:700px){.proj{grid-template-columns:1fr}.proj-vis{min-height:220px}}
+
+/* awards */
+.awards-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.awards-head p{color:var(--mute);max-width:38ch;margin:0 0 clamp(40px,6vw,72px)}
+.awards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.award{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .35s}
+.award:hover{border-color:rgba(47,214,198,.4)}
+.award.feat{grid-column:span 2;grid-row:span 2}
+.award.wide{grid-column:span 2}
+.award-media{position:relative;display:block;width:100%;padding:0;border:0;background:var(--bg2);cursor:zoom-in;overflow:hidden;aspect-ratio:4/3}
+.award.feat .award-media{aspect-ratio:auto;flex:1;min-height:300px}
+.award.wide .award-media{aspect-ratio:16/8}
+.award-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.award:hover .award-media img{transform:scale(1.06)}
+.award-media .zoom{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;background:rgba(6,15,23,.7);display:grid;place-items:center;color:#fff;opacity:0;transform:scale(.7);transition:.35s}
+.award:hover .zoom{opacity:1;transform:none}
+.award-media .zoom svg{width:18px;height:18px}
+.award-yr{position:absolute;left:14px;top:14px;padding:5px 11px;border-radius:999px;background:var(--amber);color:#1a1204;font:600 12.5px var(--f3);letter-spacing:.06em}
+.award-txt{padding:18px 20px 22px}
+.award-txt b{display:block;font:700 17px/1.3 var(--f1);letter-spacing:-.01em}
+.award.feat .award-txt b{font-size:clamp(22px,2.4vw,30px);line-height:1.15}
+.award-txt span{display:block;margin-top:6px;color:var(--mute);font-size:14.5px}
+.award-txt .rank{display:inline-block;color:var(--amber);font:500 12px var(--f3);letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px}
+@media(max-width:1000px){.awards{grid-template-columns:1fr 1fr}.award.feat{grid-row:auto}.award.feat .award-media{aspect-ratio:16/10;flex:none;min-height:0}}
+@media(max-width:600px){.awards{grid-template-columns:1fr}.award.feat,.award.wide{grid-column:auto}.award.wide .award-media{aspect-ratio:4/3}}
+
+/* lightbox */
+dialog.lb{border:0;padding:0;background:none;max-width:min(1100px,92vw);max-height:90vh;color:var(--ink)}
+dialog.lb::backdrop{background:rgba(3,8,12,.88);backdrop-filter:blur(6px)}
+dialog.lb img{max-height:78vh;width:auto;margin:0 auto;border-radius:14px}
+dialog.lb p{text-align:center;margin:14px 0 0;color:var(--mute)}
+dialog.lb button{position:fixed;right:22px;top:18px;width:46px;height:46px;border-radius:50%;border:1px solid var(--line2);background:var(--panel);color:var(--ink);font-size:22px;cursor:pointer}
+
+/* press */
+.outlets{display:flex;flex-wrap:wrap;gap:10px 34px;color:var(--dim);margin:0 0 34px;font-size:14px}
+.press-feat{display:block;position:relative;text-decoration:none;color:var(--ink);background:linear-gradient(135deg,rgba(47,214,198,.14),rgba(47,214,198,.02) 60%),var(--panel);border:1px solid rgba(47,214,198,.28);border-radius:24px;padding:clamp(24px,4vw,48px);margin-bottom:28px;overflow:hidden}
+.press-feat::after{content:"\201C";position:absolute;right:clamp(10px,3vw,40px);top:-.18em;font:800 clamp(160px,22vw,300px)/1 var(--f1);color:rgba(47,214,198,.08);pointer-events:none}
+.pf-top{display:flex;justify-content:space-between;color:var(--teal)}
+.pf-quote{font:600 clamp(24px,3.4vw,46px)/1.2 var(--f1);letter-spacing:-.02em;margin:clamp(24px,4vw,44px) 0;max-width:26ch}
+.pf-bot{display:flex;justify-content:space-between;align-items:end;gap:20px}
+.pf-bot b{display:block;font:700 clamp(18px,1.8vw,22px) var(--f1)}
+.pf-bot span{color:var(--mute);font-size:15px}
+.press-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line2)}
+.press-row{position:relative;display:grid;grid-template-columns:190px 1fr 110px 44px;gap:20px;align-items:center;padding:24px 12px;border-bottom:1px solid var(--line2);color:var(--ink);text-decoration:none;overflow:hidden;isolation:isolate}
+.press-row::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--teal);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.press-row:hover::before,.press-row:focus-visible::before{transform:scaleY(1)}
+.press-row:hover,.press-row:focus-visible,.press-row:hover .pr-src,.press-row:hover .pr-date,.press-row:focus-visible .pr-src,.press-row:focus-visible .pr-date{color:#04141c}
+.pr-src{font:700 17px var(--f1);color:var(--teal);transition:color .3s}
+.pr-title{font-size:clamp(16px,1.4vw,19px);line-height:1.4;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.press-row:hover .pr-title{transform:translateX(8px)}
+.pr-date{color:var(--dim);transition:color .3s}
+.pr-go{width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;transition:transform .5s,border-color .3s,background .3s,color .3s}
+.pr-go svg{width:18px;height:18px}
+.press-row:hover .pr-go{transform:rotate(45deg);border-color:#04141c}
+.press-feat .pr-go{flex:none;border-color:rgba(47,214,198,.4);color:var(--teal)}
+.press-feat:hover .pr-go{transform:rotate(45deg);background:var(--teal);color:#04141c}
+@media(max-width:800px){.press-row{grid-template-columns:1fr 44px;gap:6px 14px;padding:20px 4px}.pr-src,.pr-title{grid-column:1}.pr-date{grid-column:1;grid-row:3}.pr-go{grid-column:2;grid-row:1/4}.press-row:hover .pr-title{transform:none}}
+.paper-title{font:500 clamp(16px,1.5vw,18px)/1.5 var(--f2);color:var(--ink);margin:14px 0 0;font-style:italic;opacity:.85}
+.paper-link{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px;font:500 13.5px var(--f3);color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(47,214,198,.4);padding-bottom:3px;word-break:break-all}
+.paper-link:hover{border-color:var(--teal)}
+.paper-link svg{width:14px;height:14px}
+
+/* photos */
+.team-band{position:relative;margin:0 0 28px;border-radius:24px;overflow:hidden;height:clamp(320px,52vw,620px);background:var(--panel)}
+.tb-img{position:absolute;inset:-12% 0}
+.tb-img img{width:100%;height:100%;object-fit:cover;object-position:50% 78%}
+.team-band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,15,23,.1) 40%,rgba(6,15,23,.88))}
+.team-band figcaption{position:absolute;left:clamp(20px,3vw,40px);bottom:clamp(20px,3vw,36px);right:20px;z-index:1}
+.team-band figcaption .mono{color:var(--teal);display:block;margin-bottom:8px}
+.team-band figcaption b{font:800 clamp(26px,4vw,54px)/1.05 var(--f1);letter-spacing:-.03em}
+.photo-vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 70%}
+.vis-tag{position:absolute;left:14px;bottom:14px;padding:6px 10px;border-radius:8px;background:rgba(6,15,23,.75);color:var(--teal)}
+.res-right{display:grid;gap:16px}
+.res-photo{margin:0;border-radius:20px;overflow:hidden;aspect-ratio:16/10;border:1px solid var(--line)}
+.res-photo img{width:100%;height:115%;object-fit:cover;object-position:50% 40%}
+
+/* contact */
+.contact{padding-bottom:60px;overflow:hidden}
+.contact-big{font:800 clamp(48px,10vw,150px)/.92 var(--f1);letter-spacing:-.045em;margin:0 0 50px}
+.contact-big .ln:last-child{color:var(--teal)}
+.mail{display:inline-flex;align-items:center;gap:18px;font:600 clamp(20px,3.4vw,40px) var(--f1);letter-spacing:-.02em;color:var(--ink);text-decoration:none;padding:18px 30px 18px 18px;border:1px solid var(--line2);border-radius:999px;transition:border-color .3s,background .3s;word-break:break-all}
+.mail:hover{border-color:var(--teal);background:rgba(47,214,198,.06)}
+.mail i{flex:none;width:clamp(44px,5vw,64px);height:clamp(44px,5vw,64px);border-radius:50%;background:var(--teal);color:#04141c;display:grid;place-items:center}
+.mail i svg{width:45%;height:45%}
+.contact-meta{display:flex;gap:14px 40px;flex-wrap:wrap;margin-top:44px;color:var(--mute)}
+.contact-meta div .mono{display:block;color:var(--dim);margin-bottom:6px}
+.contact-meta a{color:var(--ink);text-decoration:none;font-size:18px}
+.contact-meta a:hover{color:var(--teal)}
+.contact-meta span.v{color:var(--ink);font-size:18px}
+footer{border-top:1px solid var(--line);padding:26px 0 34px;color:var(--dim);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--mute);text-decoration:none}
+footer a:hover{color:var(--teal)}
+@media(max-width:600px){.mail{padding:12px 18px 12px 12px;border-radius:24px}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');try{if(localStorage.getItem('lang')==='en')document.documentElement.lang='en'}catch(e){}</script>
+<a class="skip" href="#main" data-en="Skip to content">Bỏ qua đến nội dung</a>
+
+<div class="preloader" aria-hidden="true">
+ <div class="pre-count"><span id="pre-num">0</span><small>%</small></div>
+ <svg class="pre-line" viewBox="0 0 420 40" preserveAspectRatio="none"><path pathLength="1" d="M0 20H120l10-14 12 28 10-24 8 10H260l8-4 8 4h40l10-18 12 34 10-20 8 4H420"/></svg>
+ <div class="pre-name mono">Phan Quốc Chiến · Portfolio</div>
+</div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div><div class="cursor-ring" aria-hidden="true"></div>
+
+<header class="nav"><div class="wrap">
+<a class="brand" href="#top"><i aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M6 34h14l6-18 10 32 7-22 4 8h11" fill="none" stroke="#04141c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Phan Quốc Chiến</a>
+<nav id="site-menu" aria-label="Menu chính"><ul>
+<li><a href="#about" data-en="About">Giới thiệu</a></li>
+<li><a href="#experience" data-en="Experience">Kinh nghiệm</a></li>
+<li><a href="#research" data-en="Research">Nghiên cứu</a></li>
+<li><a href="#projects" data-en="Projects">Dự án</a></li>
+<li><a href="#awards" data-en="Awards">Thành tích</a></li>
+<li><a href="#press" data-en="Press">Báo chí</a></li>
+<li><a href="#contact" data-en="Contact">Liên hệ</a></li>
+</ul></nav>
+<div class="nav-right">
+<div class="lang" role="group" aria-label="Ngôn ngữ / Language"><button type="button" data-l="vi" aria-pressed="true">VI</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+</div>
+</div></header>
+
+<main id="main">
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" style="padding-bottom:0">
+<div class="hero-bg" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+<div class="wrap">
+ <div class="hero-txt">
+  <p class="hero-kicker mono h-in"><span class="dot"></span><span data-en="Mechatronics · Robotics · Wearable biomedical">Cơ điện tử · Robotics · Thiết bị đeo y sinh</span></p>
+  <h1 aria-label="Phan Quốc Chiến"><span class="ln" aria-hidden="true">Phan Quốc</span><span class="ln" aria-hidden="true">Chiến</span></h1>
+  <div class="hero-sub">
+   <p class="role h-in" data-en="Mechatronics engineering student<br>Product Lead @ Volterra">Sinh viên Cơ điện tử<br>Product Lead @ Volterra</p>
+   <p class="lead h-in" data-en="From autonomous robots and wearable health devices to EV charging, I want to turn ideas into things people can use.">Từ robot tự hành, thiết bị đeo y sinh đến giải pháp sạc xe điện, mình muốn biến ý tưởng thành sản phẩm dùng được ngoài đời.</p>
+  </div>
+  <div class="btns h-in">
+   <a class="btn magnetic" href="#contact"><span data-en="Contact me">Liên hệ</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+   <a class="btn alt magnetic" href="#awards"><span data-en="View achievements">Xem thành tích</span></a>
+  </div>
+ </div>
+ <figure class="photo">
+  <div class="photo-corners" aria-hidden="true"></div>
+  <div class="photo-frame"><img src="assets/portrait.jpg" width="900" height="1350" alt="Chân dung Phan Quốc Chiến, mặc áo polo đen Volterra, khoanh tay" data-en-alt="Portrait of Chien Quoc Phan in a black Volterra polo shirt, arms crossed" fetchpriority="high"></div>
+  <figcaption class="photo-cap mono"><span>Chien Q. Phan</span><span>HUST · 2023—</span></figcaption>
+  <div class="badge"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1204" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></i><div><b data-en="1st Prize">Giải Nhất</b><span data-en="National SV-Startup 2026">SV-Startup Quốc gia 2026</span></div></div>
+ </figure>
+</div>
+<div class="wrap" style="display:block;flex:none"><svg class="trace" viewBox="0 0 1000 70" preserveAspectRatio="none" aria-hidden="true"><path class="base" pathLength="1" d="M0 38H180l14-24 16 48 14-40 12 16H420l12-8 12 8h80l14-32 18 58 14-34 10 8H1000"/><path class="pulse" pathLength="1" d="M0 38H180l14-24 16 48 14-40 12 16H420l12-8 12 8h80l14-32 18 58 14-34 10 8H1000"/></svg></div>
+<div class="scroll-hint mono" aria-hidden="true">Scroll</div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="mq-track">
+ <span>Mechatronics</span><span>Robotics</span><span>Wearable Biomedical</span><span>Embedded Systems</span><span>EV Charging</span><span>PCB Design</span><span>Product Strategy</span>
+ <span>Mechatronics</span><span>Robotics</span><span>Wearable Biomedical</span><span>Embedded Systems</span><span>EV Charging</span><span>PCB Design</span><span>Product Strategy</span>
+</div></div>
+
+<!-- ================= ABOUT ================= -->
+<section id="about"><div class="wrap">
+ <div class="sec-head"><span class="sec-num mono">01 /</span><span class="mask"><h2 data-en="About">Giới thiệu</h2></span><div class="rule"></div></div>
+ <p class="statement" data-lang="vi">Mình thích những bài toán cần nhiều mảnh ghép cùng hoạt động: <span class="k">cảm biến</span>, <span class="k">cơ khí</span>, <span class="k">điện tử</span> và <span class="k">phần mềm</span>.</p>
+ <p class="statement" data-lang="en">I enjoy problems where many parts have to work together: <span class="k">sensors</span>, <span class="k">mechanics</span>, <span class="k">electronics</span> and <span class="k">software</span>.</p>
+ <div class="about-grid">
+  <div class="card rv">
+   <span class="mono" data-en="Education">Học vấn</span>
+   <p class="edu-school" style="color:var(--ink)" data-en="Hanoi University of Science and Technology (HUST)">Đại học Bách khoa Hà Nội (HUST)</p>
+   <p data-en="B.Sc. in Mechatronics Engineering">Cử nhân Kỹ thuật Cơ điện tử</p>
+   <div class="edu-meta"><span class="pill t">2023 — <span data-en="present">nay</span></span><span class="pill" data-en="Expected graduation: 2028">Dự kiến tốt nghiệp: 2028</span></div>
+   <p class="about-note" data-en="I study Mechatronics at HUST and shape product strategy at Volterra.">Hiện mình học Cơ điện tử tại HUST và định hình chiến lược sản phẩm tại Volterra.</p>
+  </div>
+  <div class="card rv">
+   <span class="mono" data-en="Skills">Kỹ năng</span>
+   <dl class="skills">
+    <div><dt data-en="Programming">Lập trình</dt><dd><span class="chip">C</span><span class="chip">C++</span><span class="chip">Python</span></dd></div>
+    <div><dt data-en="Embedded systems">Hệ thống nhúng</dt><dd><span class="chip">STM32</span><span class="chip">ESP32</span></dd></div>
+    <div><dt data-en="Mechanical design">Thiết kế cơ khí</dt><dd><span class="chip">SolidWorks</span><span class="chip">AutoCAD</span></dd></div>
+    <div><dt data-en="PCB design">Thiết kế PCB</dt><dd><span class="chip">KiCad</span><span class="chip">Altium</span></dd></div>
+   </dl>
+  </div>
+  <div class="stats">
+   <div class="stat"><span class="num" data-count="8">8</span><p data-en="Awards &amp; achievements">Giải thưởng &amp; thành tích</p></div>
+   <div class="stat"><span class="num" data-count="4">4</span><p data-en="Roles in research, startups &amp; industry">Vai trò trong nghiên cứu, khởi nghiệp &amp; doanh nghiệp</p></div>
+   <div class="stat"><span class="num" data-count="3">3</span><p data-en="Featured engineering projects">Dự án kỹ thuật tiêu biểu</p></div>
+   <div class="stat"><span class="num" data-count="1">1</span><p data-en="International conference paper">Công bố tại hội nghị quốc tế</p></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" style="padding-top:0"><div class="wrap exp">
+ <div class="exp-side">
+  <div class="sec-head" style="margin-bottom:28px"><span class="sec-num mono">02 /</span><span class="mask"><h2 data-en="Experience">Kinh nghiệm</h2></span><div class="rule"></div></div>
+  <p class="rv" data-en="From a university robotics club to a biomedical lab, a health-tech startup and an EV charging company.">Từ CLB robotics ở trường, phòng lab cơ y sinh, startup công nghệ y tế đến doanh nghiệp sạc xe điện.</p>
+  <div class="exp-count" aria-hidden="true"><b id="exp-n">01</b>/04<small data-en="roles">vai trò</small></div>
+ </div>
+ <div class="tl"><div class="tl-fill" aria-hidden="true"></div>
+ <ol class="tl-list">
+  <li class="tl-item"><span class="tl-dot"></span><div class="tl-card">
+   <span class="yr mono">2026 — <span data-en="present">nay</span></span>
+   <h3>Product Lead</h3><p class="org" data-en="Volterra Joint Stock Company">Công ty Cổ phần Volterra</p>
+   <ul class="pts"><li data-en="Shaping product strategy and roadmap for smart EV charging solutions.">Định hình chiến lược và lộ trình sản phẩm cho giải pháp sạc xe điện thông minh.</li><li data-en="Working on BESS integration and Dynamic Load Management systems.">Làm việc với tích hợp BESS và hệ thống Dynamic Load Management.</li><li data-en="Managing the product lifecycle from concept to deployment.">Quản lý vòng đời sản phẩm từ ý tưởng đến triển khai.</li></ul>
+  </div></li>
+  <li class="tl-item"><span class="tl-dot"></span><div class="tl-card">
+   <span class="yr mono">2025 — <span data-en="present">nay</span></span>
+   <h3>Founder — ReTrack</h3><p class="org" data-en="Intelligent rehabilitation monitoring system · Team leader of BioTrackers">Hệ thống theo dõi phục hồi chức năng thông minh · Trưởng nhóm BioTrackers</p>
+   <ul class="pts"><li data-en="Founded a wearable rehabilitation monitoring startup.">Sáng lập startup thiết bị đeo theo dõi phục hồi chức năng.</li><li data-en="Designed a multi-sensor architecture (IMU, EMG, ECG).">Thiết kế kiến trúc đa cảm biến (IMU, EMG, ECG).</li><li data-en="Led hardware design and wearable integration.">Phụ trách thiết kế phần cứng và tích hợp thiết bị đeo.</li><li data-en="Collaborated with clinicians for validation.">Phối hợp với bác sĩ lâm sàng để kiểm chứng.</li></ul>
+  </div></li>
+  <li class="tl-item"><span class="tl-dot"></span><div class="tl-card">
+   <span class="yr mono">2024 — 2026</span>
+   <h3 data-en="Researcher — Komlab">Nghiên cứu viên — Komlab</h3><p class="org" data-en="Biomedical engineering research lab, SME, HUST">Phòng thí nghiệm nghiên cứu cơ y sinh, SME, HUST</p>
+  </div></li>
+  <li class="tl-item"><span class="tl-dot"></span><div class="tl-card">
+   <span class="yr mono">2023 — 2024</span>
+   <h3 data-en="Vice President — HUROS">Phó chủ nhiệm — HUROS</h3><p class="org" data-en="HUST Robotics Club">CLB Robotics HUST</p>
+   <ul class="pts"><li data-en="Managed the robotics and embedded systems teams; mentored members in engineering and competitions.">Quản lý các nhóm robotics và hệ thống nhúng; hướng dẫn thành viên về kỹ thuật và thi đấu.</li><li data-en="Took part in competitions including Wheeled Robot UTC, ABU Robocon, Robocon MTA and Best Project.">Tham gia các cuộc thi như Wheeled Robot UTC, ABU Robocon, Robocon MTA và Best Project.</li></ul>
+  </div></li>
+ </ol></div>
+</div></section>
+
+<!-- ================= RESEARCH ================= -->
+<section id="research" class="research"><div class="wrap">
+ <div class="sec-head"><span class="sec-num mono">03 /</span><span class="mask"><h2 data-en="Research &amp; publications">Nghiên cứu &amp; công bố</h2></span><div class="rule"></div></div>
+ <div class="res-card">
+  <div class="rv">
+   <span class="res-tag mono" data-en="Co-author · Da Nang · 2025">Đồng tác giả · Đà Nẵng · 2025</span>
+   <h3 data-en="2nd International Conference on Health Science and Technology (ICHST 2025)">Hội nghị quốc tế lần 2 về Khoa học và Công nghệ Sức khỏe (ICHST 2025)</h3>
+   <p class="paper-title">“Development of IMU in Post-Stroke Rehabilitation Assessment” — IEEE, 2025</p>
+   <ul class="pts"><li data-en="Research on wearable rehabilitation systems using IMU sensors.">Nghiên cứu hệ thống phục hồi chức năng đeo được dùng cảm biến IMU.</li><li data-en="Designed the PCB and hardware prototype systems.">Thiết kế PCB và các hệ thống phần cứng mẫu.</li><li data-en="Performed system validation and motion data analysis.">Kiểm chứng hệ thống và phân tích dữ liệu chuyển động.</li></ul>
+   <a class="paper-link" href="https://doi.org/10.1109/ICHST66555.2025.11428761" target="_blank" rel="noopener"><span data-en="Read on IEEE Xplore">Xem bài trên IEEE Xplore</span> · DOI 10.1109/ICHST66555.2025.11428761 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+  </div>
+  <div class="res-right"><figure class="res-photo"><img src="assets/photos/ICHST.jpg" loading="lazy" alt="Nhóm nghiên cứu tại Hội nghị quốc tế ICHST 2025 ở Đà Nẵng" data-en-alt="The research group at ICHST 2025 in Da Nang"></figure>
+  <div class="signals" aria-hidden="true">
+   <div class="sig"><span class="mono">IMU</span><svg viewBox="0 0 400 56" preserveAspectRatio="none"><path pathLength="1" stroke="#2fd6c6" d="M0 28C20 8 40 8 60 28S100 48 120 28 160 4 180 28 220 52 240 28 280 10 300 28 340 46 360 28 390 14 400 28"/></svg></div>
+   <div class="sig"><span class="mono">EMG</span><svg viewBox="0 0 400 56" preserveAspectRatio="none"><path pathLength="1" stroke="#ffbf5e" d="M0 28h40l4-6 4 10 4-14 4 18 4-12 4 8 4-4h60l3-10 3 20 3-24 3 30 3-22 3 16 3-10 3 6h70l4-8 4 14 4-18 4 20 4-10 4 4H400"/></svg></div>
+   <div class="sig"><span class="mono">ECG</span><svg viewBox="0 0 400 56" preserveAspectRatio="none"><path pathLength="1" stroke="#8fd3ff" d="M0 32h50l6-6 6 6h10l6-24 8 42 6-24 8 6h40l8-8 10 8h60l6-6 6 6h10l6-24 8 42 6-24 8 6h40l8-8 10 8H400"/></svg></div>
+  </div></div>
+ </div>
+</div></section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="projects"><div class="h-pin"><div class="h-track wrap">
+ <div class="h-intro">
+  <div class="sec-head"><span class="sec-num mono">04 /</span><span class="mask"><h2 data-en="Projects">Dự án</h2></span><div class="rule"></div></div>
+  <p data-en="From health-tech wearables to autonomous vehicles and industrial automation.">Từ thiết bị đeo y tế đến phương tiện tự hành và tự động hóa công nghiệp.</p>
+  <div class="h-hint mono"><i></i><span data-en="Keep scrolling">Cuộn tiếp</span></div>
+ </div>
+ <article class="proj">
+  <div class="proj-body">
+   <span class="proj-no">01</span>
+   <div><h3>ReTrack</h3><p data-en="Wearable rehabilitation system for post-stroke monitoring. Built by the BioTrackers team, led by Chiến — champion of Youth Innovation 2025, covered by VnExpress, Tuổi Trẻ and VTV.">Hệ thống đeo hỗ trợ theo dõi phục hồi chức năng sau đột quỵ. Sản phẩm của đội BioTrackers do Chiến làm trưởng nhóm — Quán quân Sáng tạo trẻ 2025, được VnExpress, Tuổi Trẻ, VTV đưa tin.</p></div>
+   <div class="tags"><span class="pill t">Wearable</span><span class="pill">IMU · EMG · ECG</span><span class="pill">Healthcare</span></div>
+  </div>
+  <div class="proj-vis photo-vis"><img src="assets/photos/anhthietbi.jpg" loading="lazy" alt="Bộ thiết bị ReTrack: các module cảm biến, bo mạch và dây đeo trưng bày tại triển lãm" data-en-alt="ReTrack hardware: sensor modules, circuit boards and straps on display"><span class="vis-tag mono">ReTrack · hardware</span></div>
+ </article>
+ <article class="proj">
+  <div class="proj-body">
+   <span class="proj-no">02</span>
+   <div><h3 data-en="Autonomous River Cleaning Boat">Thuyền tự hành dọn rác trên sông</h3><p data-en="Unmanned waste collection system.">Hệ thống thu gom rác không người lái.</p></div>
+   <div class="tags"><span class="pill t">Autonomous</span><span class="pill">Robotics</span><span class="pill" data-en="Environment">Môi trường</span></div>
+  </div>
+  <div class="proj-vis" aria-hidden="true"><svg viewBox="0 0 320 240">
+   <path class="m radar" d="M160 60a30 30 0 0 1 30 30M160 40a50 50 0 0 1 50 50M160 20a70 70 0 0 1 70 70"/>
+   <path class="s" d="M160 60v50M140 110h40l6-20h-52z"/>
+   <path class="s" d="M70 130h180l-24 34H94z"/>
+   <path class="s wave" d="M20 180c20-10 40-10 60 0s40 10 60 0 40-10 60 0 40 10 60 0 40-10 40-4"/>
+   <path class="m wave2" d="M20 202c20-8 40-8 60 0s40 8 60 0 40-8 60 0 40 8 60 0 40-8 40-4"/>
+  </svg></div>
+ </article>
+ <article class="proj">
+  <div class="proj-body">
+   <span class="proj-no">03</span>
+   <div><h3 data-en="Automated Workpiece Feeder Machine">Máy cấp phôi tự động</h3><p data-en="Industrial automation system.">Hệ thống tự động hóa công nghiệp.</p></div>
+   <div class="tags"><span class="pill t">Automation</span><span class="pill">Industrial</span><span class="pill">PLC · Mechanics</span></div>
+  </div>
+  <div class="proj-vis" aria-hidden="true"><svg viewBox="0 0 320 240">
+   <path class="s" d="M30 160h260M30 184h260"/><circle class="s gear" cx="46" cy="172" r="12"/><circle class="s gear" cx="274" cy="172" r="12"/>
+   <g class="boxes"><rect class="s" x="70" y="126" width="34" height="34" rx="4"/><rect class="s" x="140" y="126" width="34" height="34" rx="4"/><rect class="s" x="210" y="126" width="34" height="34" rx="4"/></g>
+   <path class="s" d="M60 40h200M160 40v40"/><path class="s arm" d="M146 80h28v16h-28z"/>
+  </svg></div>
+ </article>
+ <div class="h-end"></div>
+</div></div></section>
+
+<!-- ================= AWARDS ================= -->
+<section id="awards"><div class="wrap">
+ <div class="sec-head" style="margin-bottom:28px"><span class="sec-num mono">05 /</span><span class="mask"><h2 data-en="Achievements">Thành tích</h2></span><div class="rule"></div></div>
+ <div class="awards-head"><p class="rv" data-en="Recognition from national startup competitions, investors and university innovation programs.">Ghi nhận từ các cuộc thi khởi nghiệp quốc gia, nhà đầu tư và chương trình đổi mới sáng tạo của các trường đại học.</p></div>
+ <figure class="team-band rv"><div class="tb-img"><img src="assets/photos/anhtapthe.jpg" loading="lazy" alt="Đội BioTrackers cùng các bảng giải thưởng: SV-Startup, Sáng tạo trẻ, Samsung, Kawai, VentureX, I-STARTUP" data-en-alt="The BioTrackers team with their award boards: SV-Startup, Youth Innovation, Samsung, Kawai, VentureX, I-STARTUP"></div>
+  <figcaption><span class="mono" data-en="BioTrackers team">Đội BioTrackers</span><b data-en="One product, many podiums.">Một sản phẩm, nhiều bục vinh quang.</b></figcaption></figure>
+ <!-- Ảnh giải thưởng nằm trong assets/photos/ và assets/awards/. -->
+ <ul class="awards">
+  <li class="award feat"><button class="award-media" type="button"><img src="assets/photos/SvStartup.jpg" style="object-position:50% 55%" loading="lazy" alt="Đội BioTrackers nhận Giải Nhất SV-Startup Quốc gia 2026 trên sân khấu" data-en-alt="BioTrackers receiving 1st Prize at National SV-Startup 2026 on stage"><span class="award-yr">2026</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="1st Prize">Giải Nhất</span><b data-en="National SV-Startup 2026">SV-Startup Quốc gia 2026</b><span data-en="Healthcare, Life &amp; Well-being track">Bảng Y tế, Đời sống &amp; Sức khỏe</span></div></li>
+  <li class="award"><button class="award-media" type="button"><img src="assets/photos/venturex.jpg" style="object-position:50% 40%" loading="lazy" alt="Đội BioTrackers nhận Investors’ Choice Award tại VentureX" data-en-alt="BioTrackers receiving the Investors’ Choice Award at VentureX"><span class="award-yr">2026</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="Investor’s Choice · Top award">Nhà đầu tư lựa chọn · Giải cao nhất</span><b>VentureX Incubation Program 2026</b><span>VinUniversity</span></div></li>
+  <li class="award"><button class="award-media" type="button"><img src="assets/photos/univentures.jpg" style="object-position:50% 55%" loading="lazy" alt="Các thành viên đội tại Block71" data-en-alt="Team members at Block71"><span class="award-yr">2026</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="Top 30 teams">Top 30 đội</span><b>UniVentures 2026</b><span>Block71 &amp; National University of Singapore</span></div></li>
+  <li class="award"><button class="award-media" type="button"><img src="assets/photos/kawai.jpg" style="object-position:50% 45%" loading="lazy" alt="Đội BioTrackers cầm bảng giải Kawai Startup Fair 2026 tại gian hàng ReTrack" data-en-alt="BioTrackers holding the Kawai Startup Fair 2026 award at the ReTrack booth"><span class="award-yr">2026</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="Investor’s Choice">Nhà đầu tư lựa chọn</span><b data-en="Kawai Startup 2026">Khởi nghiệp cùng Kawai 2026</b><span data-en="Foreign Trade University (FTU)">Đại học Ngoại thương (FTU)</span></div></li>
+  <li class="award"><button class="award-media" type="button"><img src="assets/photos/istartup.jpg" style="object-position:50% 45%" loading="lazy" alt="Đội nhận giải Quý quân I-STARTUP 2026" data-en-alt="The team receiving 3rd place at I-STARTUP 2026"><span class="award-yr">2026</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="3rd Place">Quý quân</span><b>I-STARTUP 2026</b></div></li>
+  <li class="award wide"><button class="award-media" type="button"><img src="assets/photos/sangtaotre.jpg" style="object-position:50% 60%" loading="lazy" alt="Đội BioTrackers nhận giải Quán quân Sáng tạo trẻ 2025" data-en-alt="BioTrackers named champion of Youth Innovation 2025"><span class="award-yr">2025</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="Champion">Quán quân</span><b data-en="Youth Innovation Competition 2025">Cuộc thi Sáng tạo trẻ 2025</b><span>HUST</span></div></li>
+  <li class="award"><button class="award-media" type="button"><img src="assets/photos/samsung.jpg" style="object-position:50% 50%" loading="lazy" alt="Đội nhận Giải Ba Samsung Innovation Tech Challenge 2025" data-en-alt="The team receiving 3rd Prize at Samsung Innovation Tech Challenge 2025"><span class="award-yr">2025</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="3rd Prize">Giải Ba</span><b>Samsung Innovation Tech Challenge 2025</b></div></li>
+  <li class="award"><button class="award-media" type="button"><img src="assets/awards/bk-ecogreen-2024.svg" loading="lazy" alt="Hình minh họa giải Á quân BK EcoGreen 2024" data-en-alt="Illustration for 1st Runner-up, BK EcoGreen 2024"><span class="award-yr">2024</span><span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+   <div class="award-txt"><span class="rank" data-en="1st Runner-up">Á quân</span><b>BK EcoGreen 2024</b><span data-en="Hanoi University of Science and Technology (HUST)">Đại học Bách khoa Hà Nội (HUST)</span></div></li>
+ </ul>
+</div></section>
+
+<!-- ================= PRESS ================= -->
+<section id="press" class="press"><div class="wrap">
+ <div class="sec-head"><span class="sec-num mono">06 /</span><span class="mask"><h2 data-en="In the press">Báo chí</h2></span><div class="rule"></div></div>
+ <div class="outlets mono" aria-hidden="true"><span>VnExpress</span><span>Tuổi Trẻ</span><span>VTV</span><span>VietNamNet</span><span>Hà Nội Online</span><span>HUST</span></div>
+ <a class="press-feat rv" href="https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/khoi-nghiep-de-chua-lanh-655878.html" target="_blank" rel="noopener">
+  <div class="pf-top mono"><span>HUST · 20.04.2026</span><span data-en="Profile">Chân dung</span></div>
+  <blockquote class="pf-quote">“Mỗi bước chân tập lại xứng đáng được đo đếm, được ghi nhận và được trân trọng.”</blockquote>
+  <div class="pf-bot"><div><b>Khởi nghiệp để “chữa lành”</b><span data-en="Phan Quốc Chiến, leader of the BioTrackers team behind ReTrack">Phan Quốc Chiến, trưởng nhóm BioTrackers và dự án ReTrack</span></div><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></div>
+ </a>
+ <ul class="press-list">
+  <li><a class="press-row" href="https://vtv.vn/cuoc-thi-sang-tao-tre-giup-sinh-vien-dai-hoc-bach-khoa-ha-noi-buoc-ra-gan-thuc-tien-hon-100260121152323946.htm" target="_blank" rel="noopener"><span class="pr-src">VTV.vn</span><span class="pr-title">Cuộc thi “Sáng tạo trẻ” giúp sinh viên Đại học Bách Khoa Hà Nội bước ra gần thực tiễn hơn</span><span class="pr-date mono">21.01.2026</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+  <li><a class="press-row" href="https://hanoionline.vn/sinh-vien-sang-che-he-thong-phuc-hoi-cho-nguoi-dot-quy-378330.htm" target="_blank" rel="noopener"><span class="pr-src">Hà Nội Online</span><span class="pr-title">Sinh viên sáng chế hệ thống phục hồi cho người đột quỵ</span><span class="pr-date mono">27.12.2025</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+  <li><a class="press-row" href="https://vnexpress.net/sinh-vien-sang-che-he-thong-phuc-hoi-cho-nguoi-dot-quy-gia-100-trieu-dong-4998377.html" target="_blank" rel="noopener"><span class="pr-src">VnExpress</span><span class="pr-title">Sinh viên sáng chế hệ thống phục hồi cho người đột quỵ giá 100 triệu đồng</span><span class="pr-date mono">26.12.2025</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+  <li><a class="press-row" href="https://vietnamnet.vn/sinh-vien-che-he-thong-ho-tro-phuc-hoi-cho-nguoi-dot-quy-gia-100-trieu-dong-2476132.html" target="_blank" rel="noopener"><span class="pr-src">VietNamNet</span><span class="pr-title">Sinh viên chế hệ thống hỗ trợ phục hồi cho người đột quỵ giá 100 triệu đồng</span><span class="pr-date mono">26.12.2025</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+  <li><a class="press-row" href="https://doisongphapluat.nguoiduatin.vn/moi-nam-200-000-ca-dot-quy-sinh-vien-viet-che-tao-tro-ly-ai-phuc-hoi-van-dong-gia-chi-100-trieu-dong-bo-a602253.html" target="_blank" rel="noopener"><span class="pr-src">Đời sống &amp; Pháp luật</span><span class="pr-title">Mỗi năm 200.000 ca đột quỵ, sinh viên Việt chế tạo “trợ lý AI” phục hồi vận động, giá chỉ 100 triệu đồng/bộ</span><span class="pr-date mono">26.12.2025</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+  <li><a class="press-row" href="https://tuoitre.vn/sinh-vien-che-tao-he-thong-ho-tro-nguoi-bi-dot-quy-phuc-hoi-dinh-gia-100-trieu-dong-san-pham-20251225202614623.htm" target="_blank" rel="noopener"><span class="pr-src">Tuổi Trẻ</span><span class="pr-title">Sinh viên chế tạo hệ thống hỗ trợ người bị đột quỵ phục hồi, định giá 100 triệu đồng/sản phẩm</span><span class="pr-date mono">25.12.2025</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+  <li><a class="press-row" href="https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/dai-hoc-bach-khoa-ha-noi-kien-tao-be-phong-vung-chac-cho-ky-lan-cong-nghe-tuong-lai-655742.html" target="_blank" rel="noopener"><span class="pr-src">HUST</span><span class="pr-title">Đại học Bách khoa Hà Nội kiến tạo bệ phóng vững chắc cho “kỳ lân” công nghệ tương lai</span><span class="pr-date mono">25.12.2025</span><span class="pr-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></li>
+ </ul>
+</div></section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact"><div class="wrap">
+ <div class="sec-head"><span class="sec-num mono">07 /</span><span class="mask"><h2 data-en="Contact">Liên hệ</h2></span><div class="rule"></div></div>
+ <p class="contact-big"><span class="mask ln"><span data-en="Let’s build">Cùng tạo ra</span></span><span class="mask ln"><span data-en="something useful.">điều hữu ích.</span></span></p>
+ <p class="rv" style="color:var(--mute);max-width:52ch;margin:0 0 30px" data-en="For collaboration, research or university partnerships, email me directly.">Để trao đổi hợp tác, nghiên cứu hoặc làm việc với nhà trường, vui lòng gửi email trực tiếp.</p>
+ <a class="mail magnetic rv" href="mailto:chienpq12.work@gmail.com"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg></i>chienpq12.work@gmail.com</a>
+ <div class="contact-meta">
+  <div class="rv"><span class="mono" data-en="Phone">Điện thoại</span><a href="tel:+84877924628">(+84) 877 924 628</a></div>
+  <div class="rv"><span class="mono" data-en="Based in">Nơi ở</span><span class="v" data-en="Hanoi, Vietnam">Hà Nội, Việt Nam</span></div>
+ </div>
+</div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Phan Quốc Chiến (Chien Quoc Phan)</span><a href="#top" data-en="Back to top ↑">Lên đầu trang ↑</a></div></footer>
+
+<dialog class="lb" id="lb"><button type="button" id="lb-close" aria-label="Đóng / Close">×</button><img id="lb-img" alt=""><p id="lb-cap"></p></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+var $=function(s,c){return (c||document).querySelector(s)},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+var root=document.documentElement;
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var hasG=!!(window.gsap&&window.ScrollTrigger);
+var lenis=null;
+
+/* ---------- language ---------- */
+var T=$$('[data-en]'),I=$$('[data-en-alt]'),B=$$('.lang button');
+T.forEach(function(e){e.dataset.vi=e.innerHTML});
+I.forEach(function(e){e.dataset.viAlt=e.alt});
+function setLang(l,save){
+ root.lang=l;
+ T.forEach(function(e){e.innerHTML=l==='en'?e.dataset.en:e.dataset.vi});
+ I.forEach(function(e){e.alt=l==='en'?e.dataset.enAlt:e.dataset.viAlt});
+ B.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.l===l)});
+ document.title=l==='en'?'Chien Quoc Phan — Mechatronics · Robotics · Wearable Biomedical Devices':'Phan Quốc Chiến — Kỹ sư Cơ điện tử · Robotics · Thiết bị đeo y sinh';
+ if(save)try{localStorage.setItem('lang',l)}catch(e){}
+ if(hasG)requestAnimationFrame(function(){ScrollTrigger.refresh()});
+}
+B.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l,true)})});
+setLang(root.lang==='en'?'en':'vi');
+
+/* ---------- mobile menu + anchors ---------- */
+var menu=$('#site-menu'),tog=$('#menu-toggle');
+function closeMenu(){menu.classList.remove('open');tog.setAttribute('aria-expanded','false')}
+tog.addEventListener('click',function(){var o=tog.getAttribute('aria-expanded')==='true';tog.setAttribute('aria-expanded',String(!o));menu.classList.toggle('open',!o)});
+$$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(ev){
+ var id=a.getAttribute('href');closeMenu();
+ if(!lenis||id.length<2)return;
+ var t=$(id);if(!t)return;ev.preventDefault();
+ lenis.scrollTo(id==='#top'?0:t,{offset:id==='#top'?0:-10,duration:1.4});
+ if(id==='#main'){t.setAttribute('tabindex','-1');t.focus({preventScroll:true})}
+})});
+
+/* ---------- lightbox ---------- */
+var lb=$('#lb');
+$$('.award-media').forEach(function(btn){btn.addEventListener('click',function(){
+ var img=$('img',btn),card=btn.parentNode;
+ $('#lb-img').src=img.currentSrc||img.src;$('#lb-img').alt=img.alt;
+ $('#lb-cap').textContent=$$('.award-txt > *',card).map(function(x){return x.textContent}).join(' · ');
+ if(lb.showModal){lb.showModal();if(lenis)lenis.stop()}
+})});
+function closeLb(){lb.close()}
+$('#lb-close').addEventListener('click',closeLb);
+lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
+lb.addEventListener('close',function(){if(lenis)lenis.start()});
+
+var pre=$('.preloader');
+if(!hasG||reduce){
+ if(pre)pre.remove();
+ $('.nav').classList.add('solid');
+ if(hasG){gsap.registerPlugin(ScrollTrigger);navState()}
+ return;
+}
+
+/* ================= GSAP ================= */
+gsap.registerPlugin(ScrollTrigger);
+if(window.Lenis){
+ lenis=new Lenis({lerp:.09,smoothWheel:true});
+ lenis.on('scroll',ScrollTrigger.update);
+ gsap.ticker.add(function(t){lenis.raf(t*1000)});
+ gsap.ticker.lagSmoothing(0);
+ lenis.stop();
+}
+
+/* split helpers */
+function splitChars(el){
+ var txt=el.textContent;el.textContent='';
+ return Array.from(txt).map(function(c){var s=document.createElement('span');s.className='ch';s.innerHTML=c===' '?'&nbsp;':c;el.appendChild(s);return s});
+}
+function splitWords(el){
+ (function walk(node){Array.prototype.slice.call(node.childNodes).forEach(function(n){
+  if(n.nodeType===3){var f=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(function(p){if(!p)return;if(/^\s+$/.test(p))f.appendChild(document.createTextNode(p));else{var s=document.createElement('span');s.className='w';s.textContent=p;f.appendChild(s)}});n.replaceWith(f)}
+  else if(n.nodeType===1)walk(n);
+ })})(el);
+ return $$('.w',el);
+}
+
+/* ---------- preloader + hero intro ---------- */
+var nameChars=[];$$('.hero h1 .ln').forEach(function(l){nameChars=nameChars.concat(splitChars(l))});
+var heroIns=$$('.hero .h-in');
+gsap.set(nameChars,{yPercent:115});
+gsap.set(heroIns,{y:30,autoAlpha:0});
+gsap.set('.photo-frame',{clipPath:'inset(100% 0% 0% 0%)'});
+gsap.set('.photo-frame img',{scale:1.3});
+gsap.set(['.photo-corners','.photo-cap'],{autoAlpha:0});
+gsap.set('.badge',{autoAlpha:0,y:30,scale:.9});
+gsap.set('.trace .base',{strokeDasharray:1,strokeDashoffset:1});
+gsap.set('.trace .pulse',{autoAlpha:0});
+gsap.set('.nav .wrap',{yPercent:-100,autoAlpha:0});
+
+var cnt={v:0},preNum=$('#pre-num');
+gsap.set('.pre-line path',{strokeDasharray:1,strokeDashoffset:1});
+var intro=gsap.timeline({paused:true});
+intro
+ .to(cnt,{v:100,duration:1.5,ease:'power2.inOut',onUpdate:function(){preNum.textContent=Math.round(cnt.v)}})
+ .to('.pre-line path',{strokeDashoffset:0,duration:1.5,ease:'power2.inOut'},0)
+ .to('.preloader > *',{y:-30,autoAlpha:0,duration:.4,stagger:.05,ease:'power2.in'},'+=.1')
+ .to(pre,{yPercent:-100,duration:.9,ease:'expo.inOut'},'-=.1')
+ .add(function(){pre.remove();if(lenis)lenis.start()})
+ .to(nameChars,{yPercent:0,duration:1.1,stagger:.035,ease:'expo.out'},'-=.45')
+ .to('.photo-frame',{clipPath:'inset(0% 0% 0% 0%)',duration:1.3,ease:'expo.inOut'},'<-.2')
+ .to('.photo-frame img',{scale:1,duration:1.6,ease:'expo.out'},'<.2')
+ .to(heroIns,{y:0,autoAlpha:1,duration:.9,stagger:.08,ease:'power3.out'},'<.1')
+ .to('.nav .wrap',{yPercent:0,autoAlpha:1,duration:.8,ease:'power3.out'},'<')
+ .to(['.photo-corners','.photo-cap'],{autoAlpha:1,duration:.6},'<.3')
+ .to('.badge',{autoAlpha:1,y:0,scale:1,duration:.8,ease:'back.out(1.6)'},'<.2')
+ .to('.trace .base',{strokeDashoffset:0,duration:1.6,ease:'power2.inOut'},'<-.4')
+ .set('.trace .pulse',{autoAlpha:1})
+ .add(function(){gsap.fromTo('.trace .pulse',{strokeDashoffset:1.06},{strokeDashoffset:0,duration:2.6,ease:'none',repeat:-1})});
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){intro.play()});
+
+gsap.to('.badge',{y:-10,duration:2.4,ease:'sine.inOut',yoyo:true,repeat:-1,delay:4});
+
+/* hero scroll parallax */
+gsap.to('.photo-frame img',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+gsap.to('.hero-txt',{y:-80,autoAlpha:.2,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+gsap.to('.photo',{y:60,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+/* mouse glow */
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+ var gx=gsap.quickTo('.glow','x',{duration:1.2,ease:'power3'}),gy=gsap.quickTo('.glow','y',{duration:1.2,ease:'power3'});
+ var hero=$('.hero');
+ hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();gx(e.clientX-r.left-r.width*.55);gy(e.clientY-r.top-r.height*.2)});
+ /* custom cursor */
+ root.classList.add('has-cursor');
+ var cd=$('.cursor'),cr=$('.cursor-ring');
+ var dx=gsap.quickTo(cd,'x',{duration:.1}),dy=gsap.quickTo(cd,'y',{duration:.1}),rx=gsap.quickTo(cr,'x',{duration:.45,ease:'power3'}),ry=gsap.quickTo(cr,'y',{duration:.45,ease:'power3'});
+ gsap.set([cd,cr],{autoAlpha:0});addEventListener('mousemove',function(e){gsap.to([cd,cr],{autoAlpha:1,duration:.3,overwrite:'auto'});dx(e.clientX);dy(e.clientY);rx(e.clientX);ry(e.clientY)});
+ document.addEventListener('mouseover',function(e){cr.classList.toggle('hover',!!e.target.closest('a,button'))});
+ /* magnetic */
+ $$('.magnetic').forEach(function(m){
+  var mx=gsap.quickTo(m,'x',{duration:.5,ease:'power3'}),my=gsap.quickTo(m,'y',{duration:.5,ease:'power3'});
+  m.addEventListener('mousemove',function(e){var r=m.getBoundingClientRect();mx((e.clientX-r.left-r.width/2)*.25);my((e.clientY-r.top-r.height/2)*.35)});
+  m.addEventListener('mouseleave',function(){mx(0);my(0)});
+ });
+}
+
+/* ---------- chrome: progress, nav ---------- */
+gsap.to('.progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});
+function navState(){
+ var nav=$('.nav');
+ ScrollTrigger.create({start:0,end:'max',onUpdate:function(s){
+  var y=s.scroll();nav.classList.toggle('solid',y>40);
+  nav.classList.toggle('hide',s.direction===1&&y>400&&!menu.classList.contains('open'));
+ }});
+ $$('#site-menu a').forEach(function(a){
+  var sec=$(a.getAttribute('href'));if(!sec)return;
+  ScrollTrigger.create({trigger:sec,start:'top 45%',end:'bottom 45%',onToggle:function(s){a.classList.toggle('active',s.isActive)}});
+ });
+}
+navState();
+
+/* ---------- marquee with scroll velocity ---------- */
+var mq=gsap.to('.mq-track',{xPercent:-50,duration:28,ease:'none',repeat:-1});mq.totalTime(28*200);
+var mqDir=1;
+ScrollTrigger.create({trigger:'.marquee',start:'top bottom',end:'bottom top',onUpdate:function(s){
+ var v=s.getVelocity();if(s.direction!==mqDir){mqDir=s.direction}
+ gsap.to(mq,{timeScale:mqDir*Math.min(1+Math.abs(v)/300,6),duration:.2,overwrite:true});
+ gsap.to(mq,{timeScale:mqDir,duration:1.2,delay:.2,ease:'power2.out'});
+}});
+gsap.fromTo('.marquee',{skewY:0},{skewY:-2,ease:'none',scrollTrigger:{trigger:'.marquee',start:'top bottom',end:'bottom top',scrub:true}});
+
+/* ---------- section heads ---------- */
+$$('.sec-head').forEach(function(h){
+ var tl=gsap.timeline({scrollTrigger:{trigger:h,start:'top 85%'}});
+ tl.from($('.mask > *',h),{yPercent:110,duration:1.1,ease:'expo.out'})
+   .from($('.sec-num',h),{autoAlpha:0,x:-20,duration:.7,ease:'power3.out'},'<.1')
+   .from($('.rule',h),{scaleX:0,duration:1.2,ease:'expo.inOut'},'<');
+});
+
+/* generic reveal */
+ScrollTrigger.batch('.rv',{start:'top 88%',once:true,onEnter:function(els){gsap.from(els,{y:50,autoAlpha:0,duration:1,stagger:.1,ease:'power3.out'})}});
+
+/* ---------- about: statement word highlight ---------- */
+$$('.statement').forEach(function(st){
+ var w=splitWords(st);
+ gsap.fromTo(w,{opacity:.14},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:st,start:'top 80%',end:'bottom 45%',scrub:true}});
+});
+gsap.from('.skills .chip',{scale:.6,autoAlpha:0,duration:.5,stagger:.04,ease:'back.out(2)',scrollTrigger:{trigger:'.skills',start:'top 80%'}});
+gsap.from('.stat',{y:40,autoAlpha:0,duration:.9,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.stats',start:'top 85%'}});
+$$('.stat .num').forEach(function(n){
+ var to=+n.dataset.count,o={v:0};n.textContent='0';
+ gsap.to(o,{v:to,duration:1.8,ease:'power2.out',scrollTrigger:{trigger:n,start:'top 88%'},onUpdate:function(){n.textContent=Math.round(o.v)}});
+});
+
+/* ---------- experience timeline ---------- */
+gsap.to('.tl-fill',{scaleY:1,ease:'none',scrollTrigger:{trigger:'.tl',start:'top 60%',end:'bottom 60%',scrub:.4}});
+var expN=$('#exp-n');
+$$('.tl-item').forEach(function(it,i){
+ gsap.from($('.tl-card',it),{x:60,autoAlpha:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:it,start:'top 85%'}});
+ gsap.from($$('.pts li',it),{x:20,autoAlpha:0,duration:.6,stagger:.07,ease:'power2.out',scrollTrigger:{trigger:it,start:'top 75%'}});
+ ScrollTrigger.create({trigger:it,start:'top 60%',end:'bottom 60%',onEnter:function(){it.classList.add('on');expN.textContent='0'+(i+1)},onEnterBack:function(){expN.textContent='0'+(i+1)},onLeaveBack:function(){it.classList.remove('on');expN.textContent='0'+Math.max(1,i)}});
+});
+
+/* ---------- research signals ---------- */
+gsap.set('.sig path',{strokeDasharray:1,strokeDashoffset:1});
+gsap.to('.sig path',{strokeDashoffset:0,stagger:.2,ease:'none',scrollTrigger:{trigger:'.signals',start:'top 85%',end:'bottom 45%',scrub:1}});
+gsap.from('.signals',{y:80,rotate:2,autoAlpha:0,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'.signals',start:'top 90%'}});
+
+/* ---------- projects: horizontal scroll (desktop) ---------- */
+var mm=gsap.matchMedia();
+mm.add('(min-width: 901px)',function(){
+ root.classList.add('h-mode');
+ var track=$('.h-track');
+ function dist(){return Math.max(0,track.scrollWidth-window.innerWidth)}
+ var tween=gsap.to(track,{x:function(){return -dist()},ease:'none',scrollTrigger:{trigger:'#projects',pin:'.h-pin',start:'top top',end:function(){return '+='+dist()},scrub:1,invalidateOnRefresh:true,anticipatePin:1}});
+ $$('.proj').forEach(function(p){
+  gsap.from(p,{rotate:4,y:60,scale:.92,autoAlpha:.3,ease:'none',scrollTrigger:{trigger:p,containerAnimation:tween,start:'left 100%',end:'left 55%',scrub:true}});
+  var v=$('.proj-vis svg',p)||$('.proj-vis img',p);gsap.fromTo(v,{xPercent:v.tagName==='IMG'?0:18,scale:v.tagName==='IMG'?1.25:1},{xPercent:v.tagName==='IMG'?0:-18,scale:1,ease:'none',scrollTrigger:{trigger:p,containerAnimation:tween,start:'left right',end:'right left',scrub:true}});
+ });
+ return function(){root.classList.remove('h-mode')};
+});
+mm.add('(max-width: 900px)',function(){
+ $$('.proj').forEach(function(p){gsap.from(p,{y:70,autoAlpha:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:p,start:'top 88%'}})});
+});
+/* project svg idle motion */
+gsap.to('.pulse-dot',{scale:1.6,transformOrigin:'50% 50%',duration:.8,yoyo:true,repeat:-1,ease:'sine.inOut'});
+gsap.to('.radar',{opacity:.1,duration:1.2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+gsap.to('.wave',{x:-16,duration:2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+gsap.to('.wave2',{x:14,duration:2.4,yoyo:true,repeat:-1,ease:'sine.inOut'});
+gsap.fromTo('.boxes',{x:-40},{x:40,duration:3,repeat:-1,ease:'none'});
+gsap.to('.arm',{y:26,duration:.75,yoyo:true,repeat:-1,ease:'power2.inOut'});
+
+/* ---------- awards ---------- */
+$$('.award').forEach(function(a,i){
+ var tl=gsap.timeline({scrollTrigger:{trigger:a,start:'top 88%'}});
+ tl.from(a,{y:80,autoAlpha:0,duration:1,ease:'power3.out',delay:(i%3)*.08})
+   .from($('.award-media',a),{clipPath:'inset(100% 0% 0% 0%)',duration:1.2,ease:'expo.inOut'},'<')
+   .from($('.award-media img',a),{scale:1.35,duration:1.6,ease:'expo.out'},'<.2')
+   .from($('.award-yr',a),{autoAlpha:0,y:-10,duration:.5},'-=.8');
+});
+
+/* ---------- photos parallax ---------- */
+gsap.fromTo('.tb-img',{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:'.team-band',start:'top bottom',end:'bottom top',scrub:true}});
+gsap.from('.team-band figcaption > *',{y:40,autoAlpha:0,stagger:.12,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.team-band',start:'top 65%'}});
+gsap.fromTo('.res-photo img',{yPercent:-10},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.res-photo',start:'top bottom',end:'bottom top',scrub:true}});
+gsap.from('.res-photo',{clipPath:'inset(0% 0% 100% 0%)',duration:1.3,ease:'expo.inOut',scrollTrigger:{trigger:'.res-photo',start:'top 85%'}});
+
+/* ---------- press ---------- */
+gsap.from('.outlets span',{y:20,autoAlpha:0,stagger:.06,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'.outlets',start:'top 90%'}});
+gsap.from('.pf-quote',{y:40,autoAlpha:0,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'.press-feat',start:'top 75%'}});
+gsap.from('.press-list li',{x:-40,autoAlpha:0,duration:.8,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.press-list',start:'top 85%'}});
+
+/* ---------- contact ---------- */
+var cb=gsap.timeline({scrollTrigger:{trigger:'.contact-big',start:'top 85%'}});
+cb.from('.contact-big .ln > span',{yPercent:110,duration:1.2,stagger:.12,ease:'expo.out'});
+gsap.from('.mail i',{rotate:-180,scale:0,duration:1,ease:'back.out(1.7)',scrollTrigger:{trigger:'.mail',start:'top 90%'}});
+
+window.addEventListener('load',function(){ScrollTrigger.refresh()});
+})();
+</script>
+</body>
+</html>
